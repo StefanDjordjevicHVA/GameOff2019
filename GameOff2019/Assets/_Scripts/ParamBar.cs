@@ -6,6 +6,7 @@ public class ParamBar : MonoBehaviour
 {
     public int band;
     public float startScale, scaleMultiplier;
+    public float doSomething;
 
     public GameObject movingObject;
     // Start is called before the first frame update
@@ -24,7 +25,7 @@ public class ParamBar : MonoBehaviour
 
     void CreateMovingObject()
     {
-        if(transform.localScale.y > 10f)
+        if(transform.localScale.y > doSomething)
         {
             Instantiate(movingObject, transform.position, Quaternion.identity);
         }
