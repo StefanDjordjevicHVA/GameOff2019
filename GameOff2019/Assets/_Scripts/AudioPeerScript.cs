@@ -30,7 +30,18 @@ public class AudioPeerScript : MonoBehaviour
 
     void CreateFrequencyBands()
     {
-        // 22000 / 512 = 43hz per sample
+        /* 22000 / 512 = 43hz per sample
+         * 22000 / 1024 = 22hz per sample
+         * 22000 / 2048 = 10hz per sample
+         * 
+         * 20-60
+         * 60-250
+         * 250-500
+         * 500-2000
+         * 2000-4000
+         * 4000-6000
+         * 6000-20000 
+         */
 
         int count = 0;
 

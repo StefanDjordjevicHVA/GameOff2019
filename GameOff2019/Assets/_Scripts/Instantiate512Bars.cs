@@ -17,10 +17,17 @@ public class Instantiate512Bars : MonoBehaviour
             GameObject _instantiateBar = (GameObject)Instantiate(sampleBarPrefab);
             // -8.84, -5
             // + .9f op de x-as
-            _instantiateBar.transform.position = new Vector2(-8.84f, -5f);
+            //_instantiateBar.transform.position = new Vector2(-8.84f, -5f);
+            //_instantiateBar.transform.parent = this.transform;
+            //_instantiateBar.name = "Samplebar" + i;
+            //_instantiateBar.transform.position += new Vector3(0.11f * i, 0, 0);
+
+            _instantiateBar.transform.position = this.transform.position;
             _instantiateBar.transform.parent = this.transform;
             _instantiateBar.name = "Samplebar" + i;
-            _instantiateBar.transform.position += new Vector3(0.11f * i, 0, 0);
+            this.transform.eulerAngles = new Vector3(0, 0, 0.703125f * i);
+            _instantiateBar.transform.position = Vector3.up * 1.5f;
+
             sampleBar[i] = _instantiateBar;
         }
     }
