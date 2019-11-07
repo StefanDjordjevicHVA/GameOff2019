@@ -25,9 +25,10 @@ public class ParamBar : MonoBehaviour
 
     void CreateMovingObject()
     {
-        if(transform.localScale.y > doSomething)
+        if(AudioPeerScript.freqBand[band] > doSomething)
         {
             Instantiate(movingObject, transform.position, Quaternion.identity);
+            Debug.Log(transform.name);
         }
     }
 }
