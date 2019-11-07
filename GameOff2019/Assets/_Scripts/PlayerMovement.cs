@@ -7,46 +7,52 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private float speed;
+    public float speed;
     private double blinkTime;
     private Rigidbody2D playerRigidBody;
+    private bool isBlinking;
+    private bool canBlink;
 
     void Start()
     {
-        playerRigidBody = this.GetComponent<Rigidbody2D> ();
+        playerRigidBody = this.GetComponent<Rigidbody2D>();
+        isBlinking = false;
+        canBlink = true;
+        blinkTime = .1;
         speed = 10;
-        blinkTime = 0.2;
+    }
+
+    void Update()
+    {
+         if(Input.GetKeyDown(KeyCode.Space)){
+             if(canBlink){
+                 canBlink = !canBlink;
+                 isBlinking = !isBlinking;
+             }
+        }
     }
 
     void FixedUpdate()
     {
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+        float horizontalMovement = Input.GetAxisRaw("Horizontal");
+        float verticalMovement = Input.GetAxisRaw("Vertical");
+ 
+        Vector3 temperaryVector = new Vector3(horizontalMovement, verticalMovement, 0);
+        temperaryVector = temperaryVector.normalized * speed * Time.deltaTime;
+        playerRigidBody.MovePosition(playerRigidBody.transform.position + temperaryVector);
 
-        Vector3 tempVect = new Vector3(h, v, 0);
-        tempVect = tempVect.normalized * speed * Time.deltaTime;
-        playerRigidBody.MovePosition(playerRigidBody.transform.position + tempVect);
-
-        if(Input.GetKeyDown(KeyCode.Space)){
-            // playerRigidBody.MovePosition(playerRigidBody.transform.position + tempVect * 12);
-            StartCoroutine(Blink());
-            StopCoroutine(Blink());
+        if(isBlinking){
+            blinkTime = blinkTime - Time.deltaTime;
+            if(blinkTime > 0){
+                speed = 25;
+            }else{
+                speed = 10;
+                blinkTime = .1;
+                isBlinking = !isBlinking;
+                canBlink = !canBlink;
+            }
         }
 
-        if(blinkTime <= 0) {
-            speed = 10;
-            blinkTime = 0.2;
-        }
-
-    }
-
-    IEnumerator Blink ()
-    {
-        while(blinkTime > 0){
-            blinkTime -= Time.deltaTime;
-            speed = 40;
-            yield return null;
-        }
     }
 
 }
