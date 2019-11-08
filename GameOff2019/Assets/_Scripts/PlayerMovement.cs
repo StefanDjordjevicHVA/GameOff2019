@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(BoxCollider2D))]
+//[RequireComponent(typeof(BoxCollider2D))]
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -11,15 +11,30 @@ public class PlayerMovement : MonoBehaviour
     private double blinkTime;
     private Rigidbody2D playerRigidBody;
 
+    private int particlesHit;
+
+    public GameObject powerShotObject;
+
+    public ParticleSystem part;
+    public ParticleSystem part2;
+
+    public List<ParticleCollisionEvent> collisionEvents;
+
+
     void Start()
     {
         playerRigidBody = this.GetComponent<Rigidbody2D>();
         speed = 10;
         blinkTime = 0.2;
+
+        particlesHit = 0;
     }
 
     void FixedUpdate()
     {
+        RotatePowerShot();
+        AddParticlesToPowerShot();
+
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
@@ -50,6 +65,32 @@ public class PlayerMovement : MonoBehaviour
             speed = 40;
             yield return null;
         }
+    }
+
+    void RotatePowerShot()
+    {
+        powerShotObject.transform.Rotate(new Vector3(0, 0, 5f));
+    }
+
+    void AddParticlesToPowerShot()
+    {
+        //part.emissionRate++;
+    }
+
+    void OnParticleCollision(GameObject other)
+    {
+        if (particlesHit > 20)
+        {
+            if (part.emissionRate > 1000)
+            {
+                part.emissionRate = 1000;
+                part2.emissionRate = 1000;
+            }
+            part.emissionRate++;
+            part2.emissionRate++;
+            particlesHit = 0;
+        }
+        particlesHit++;
     }
 
 }

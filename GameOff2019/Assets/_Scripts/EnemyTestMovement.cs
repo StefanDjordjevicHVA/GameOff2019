@@ -25,7 +25,7 @@ public class EnemyTestMovement : MonoBehaviour
     {
         if (AudioPeerScript.freqBand[6] > 5f) transform.Rotate(new Vector3(0, 0, 20f));
 
-        if (AudioPeerScript.freqBand[0] > 5f)
+        if (AudioPeerScript.freqBand[0] > 1f)
         {
             transform.localScale = new Vector3(1.2f, 1.2f, 1);
 
